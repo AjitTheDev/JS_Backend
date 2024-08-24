@@ -19,7 +19,11 @@ app.use(express.static("public"))
 
 
 //router import
+import todoRouter from './routes/notes.routes.js'
 
+
+//routes Declaration
+app.use("/api/v1/todo",todoRouter)
 
 export {app}
 

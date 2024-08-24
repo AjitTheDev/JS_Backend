@@ -20,7 +20,7 @@ const noteSchema= new Schema(
             lowercase:true
 
         },
-        createBy:{
+        createdBy:{
             type:String,
             required:true,
         }

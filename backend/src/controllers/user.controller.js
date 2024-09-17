@@ -20,7 +20,15 @@ const registerUser =asyncHandler(async(req,res)=>{
         role
      })
 
-    return res.status(201).json(200,user, "User registered successfully !! ")
+     const createdUser=await User.findById(user._id).select(
+        "-password"
+    )
+
+    if(!createdUser){
+        throw new ApiError(400, "Something went wrong, while registration !")
+    }
+
+    return res.status(201).json(new ApiResponse(200,createdUser, "User registered successfully !! "))
 })
 
 
@@ -43,7 +51,7 @@ const loginUser=asyncHandler(async(req,res)=>{
 
 
     if(user){
-        const token = await jwt.sign({userName:userName, role:role, userId:userId},process.env.ACCESS_TOKEN,
+        const token = await jwt.sign({userName:userName, role:role, userId:user._id},process.env.ACCESS_TOKEN,
             {
                 expiresIn:process.env.ACCESS_TOKEN_EXPIRY
             }
@@ -61,7 +69,7 @@ const logoutUser = asyncHandler(async(req,res)=>{
     return res
     .clearCookie("ACCESS_TOKEN")
     .status(200)
-    .json(new ApiResponse(200, "Successfully logout 😏 🍀"))
+    .json(new ApiResponse(200, "Successfully logout"))
 })
 
 const getAllUsers = asyncHandler(async(req, res)=>{

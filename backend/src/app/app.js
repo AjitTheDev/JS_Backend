@@ -19,11 +19,12 @@ app.use(cookieParser())
 // Router Import 
 import userRoute from '../routes/user.route.js';
 import expenseRoute from '../routes/expense.route.js'
-
+import budgetRoute from '../routes/budget.route.js'
 
 // Routes Declaration 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/expense",expenseRoute);
+app.use("/api/v1/budget",budgetRoute);
 
 
 export {app}

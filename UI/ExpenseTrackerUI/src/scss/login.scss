@@ -1,0 +1,99 @@
+// Custom classes for glassmorphism effect
+.glass-effect {
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  // Main container for login page
+  .login-container {
+    @apply flex justify-center items-center h-screen bg-blue-500 relative;
+    overflow: hidden;
+  
+    // Background shapes
+    .background-shape {
+      @apply absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+  
+      &-1 {
+        width: 300px;
+        height: 300px;
+        top: -50px;
+        left: -100px;
+      }
+  
+      &-2 {
+        width: 150px;
+        height: 150px;
+        bottom: 50px;
+        right: 100px;
+      }
+  
+      &-3 {
+        width: 200px;
+        height: 200px;
+        top: 200px;
+        right: -50px;
+      }
+    }
+  
+    // Login form container
+    .login-form {
+      @apply flex flex-col items-center justify-center p-8 w-96 glass-effect;
+  
+      h2 {
+        @apply text-white text-2xl mb-4;
+      }
+  
+      form {
+        @apply w-full flex flex-col space-y-4;
+  
+        .input-field {
+          @apply flex flex-col;
+  
+          label {
+            @apply text-white text-sm;
+          }
+  
+          input {
+            @apply p-2 mt-1 bg-white bg-opacity-10 border border-gray-300 rounded text-white;
+          }
+  
+          .forgot-password {
+            @apply text-xs text-gray-300 self-end mt-1;
+          }
+        }
+  
+        button {
+          @apply bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700;
+        }
+      }
+  
+      .divider {
+        @apply text-white text-sm my-4;
+      }
+  
+      .social-login {
+        @apply flex space-x-4;
+  
+        button {
+          @apply flex items-center justify-center p-2 rounded bg-white hover:bg-gray-200;
+  
+          img {
+            @apply w-5 h-5 mr-2;
+          }
+  
+          span {
+            @apply text-black text-sm;
+          }
+        }
+      }
+  
+      .register-link {
+        @apply text-white text-xs mt-4;
+      }
+    }
+  }

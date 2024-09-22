@@ -1,0 +1,70 @@
+<div class="login-container">
+    <!-- Background shapes -->
+    <div class="background-shape background-shape-1"></div>
+    <div class="background-shape background-shape-2"></div>
+    <div class="background-shape background-shape-3"></div>
+
+    <!-- Login form container -->
+    <div class="login-form">
+        <h2>Login</h2>
+
+        <div *ngIf="!registerForm.valid && showAlert" role="alert" class="mb-4 relative flex w-full p-3 text-sm text-white bg-red-600 rounded-md">
+            <span>All fields are mandatory.</span>
+            <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" (click)="closeAlert()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <form [formGroup]="registerForm">
+            <div class="input-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" placeholder="Enter your email" />
+            </div>
+            <div class="input-field">
+                <label for="password">Password</label>
+                <input type="password" formControlName="password" id="password" placeholder="Enter your password" />
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+            <div class="input-field">
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="confirmpassword" formControlName="confirmPassword" id="confirmpassword" placeholder="Enter your confirm password" />
+            </div>
+            <div class="input-field">
+                <label for="username">User Name</label>
+                <input type="username" formControlName="username" id="username" placeholder="Enter your username" />
+            </div>
+            <div class="input-field">
+                <mat-form-field>
+                    <label for="role">Role</label>
+                    <select name="role" id="role" formControlName="role">
+                        <option value="client">Client</option>
+                        <option value="admin">Admin</option> 
+                    </select>
+                </mat-form-field>
+            </div>
+            <button type="submit" (click)="onRegister()">Register</button>
+
+            <div class="divider">or continue with</div>
+
+            <div class="social-login">
+                <button>
+                    <img src="assets/images/google-icon.jpeg" alt="Google Icon" />
+                    <span>Google</span>
+                </button>
+                <button>
+                    <img src="assets/images/facebook-icon.jpeg" alt="Facebook Icon" />
+                    <span>Facebook</span>
+                </button>
+            </div>
+
+            <!-- Register link -->
+            <p class="register-link">
+                Already have an account? <a (click)="onLogin()">Login</a> for free
+            </p>
+        </form>
+    </div>
+</div>
+
+

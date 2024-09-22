@@ -1,0 +1,12 @@
+
+<div *ngIf="isAuthorized">
+    <app-app-menu></app-app-menu>
+    <router-outlet />
+</div>
+
+
+
+<div *ngIf="!isAuthorized">
+    <router-outlet />
+</div>
+

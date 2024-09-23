@@ -1,19 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [ FormsModule,CommonModule,
-    ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
   showAlert:boolean = false;
+
   loginForm=new FormGroup({
     email:new FormControl('',[Validators.required]),
     password:new FormControl('',[Validators.required])
@@ -25,7 +22,9 @@ export class LoginComponent {
 
   onSignIn(){
     if(this.loginForm.valid){
+      // this._userHttpService.registerUser(this.loginForm.value).subscribe(data=>{
 
+      // })
     }else{
       this.showAlert = true;
     }
@@ -38,5 +37,5 @@ export class LoginComponent {
   onRegister(){
     this._router.navigate(['/register'])
   }
-
+  
 }

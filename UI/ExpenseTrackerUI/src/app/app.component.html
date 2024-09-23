@@ -1,0 +1,8 @@
+<div *ngIf="isAuthorized">
+  <router-outlet />
+</div>
+
+<div *ngIf="!isAuthorized">
+  <router-outlet />
+</div>
+

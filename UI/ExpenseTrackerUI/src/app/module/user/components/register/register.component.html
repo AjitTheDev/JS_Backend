@@ -23,26 +23,24 @@
                 <input type="email" id="email" formControlName="email" placeholder="Enter your email" />
             </div>
             <div class="input-field">
-                <label for="password">Password</label>
-                <input type="password" formControlName="password" id="password" placeholder="Enter your password" />
-                <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-            <div class="input-field">
-                <label for="confirmpassword">Confirm Password</label>
-                <input type="confirmpassword" formControlName="confirmPassword" id="confirmpassword" placeholder="Enter your confirm password" />
+                <label for="userid">User ID</label>
+                <input type="userid" id="userid" formControlName="userId" placeholder="Enter your userid" />
             </div>
             <div class="input-field">
                 <label for="username">User Name</label>
-                <input type="username" formControlName="username" id="username" placeholder="Enter your username" />
+                <input type="username" formControlName="userName" id="username" placeholder="Enter your userName" />
             </div>
             <div class="input-field">
-                <mat-form-field>
-                    <label for="role">Role</label>
-                    <select name="role" id="role" formControlName="role">
-                        <option value="client">Client</option>
-                        <option value="admin">Admin</option> 
-                    </select>
-                </mat-form-field>
+                <label for="password">Password</label>
+                <input type="password" formControlName="password" id="password" placeholder="Enter your password" />
+            </div>
+            <div class="input-field">
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="confirmpassword" formControlName="confirmPassword" id="confirmpassword" placeholder="Enter your confirmpassword" />
+            </div>
+            <div class="input-field">
+                <label for="role">Role</label>
+                <input type="role" formControlName="role" id="role" placeholder="Enter your role" />
             </div>
             <button type="submit" (click)="onRegister()">Register</button>
 
@@ -61,7 +59,7 @@
 
             <!-- Register link -->
             <p class="register-link">
-                Already have an account? <a (click)="onLogin()">Login</a> for free
+                Already have an account? <a (click)="onLogin()">Login</a>
             </p>
         </form>
     </div>

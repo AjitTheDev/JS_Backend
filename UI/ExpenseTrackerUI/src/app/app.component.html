@@ -1,8 +1,22 @@
-<div *ngIf="isAuthorized">
-  <router-outlet />
-</div>
+<div *ngIf="isAuthorized ==='true'">
 
-<div *ngIf="!isAuthorized">
-  <router-outlet />
-</div>
 
+  <div class="grid grid-cols-5  gap-5">
+    <!-- Sidebar/Menu -->
+    <div class="col-span-1 bg-[#F7EDED] rounded-r-xl border-r-4 border-[#D6B2DC] p-4">
+      <!-- Profile Section -->
+      <app-app-menu></app-app-menu>
+
+    </div>
+
+    <div class="col-span-4 p-6 bg-[#F7EDED] border-l-4 border-r-4 border-[#D6B2DC] rounded-l-xl rounded-r-xl ">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+  </div>
+
+
+  <div *ngIf="isAuthorized !=='true'">
+    <router-outlet></router-outlet>
+  </div>

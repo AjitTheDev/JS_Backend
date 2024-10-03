@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 const userSchema =new mongoose.Schema({
     userId:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
         unique:true
     },
@@ -55,6 +55,11 @@ const userSchema =new mongoose.Schema({
         type:Boolean,
        // required:true,
     },
+    totalWealth: { type: Number, default: 0 }, // Tracks total wealth saved
+    accounts: [{
+      accountName: String,   // E.g., 'Bank Account 1'
+      balance: Number        // Account-specific balance
+    }]
     
 },{
     timestamps:true

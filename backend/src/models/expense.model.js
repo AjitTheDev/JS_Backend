@@ -21,6 +21,10 @@ const expenseSchema = new mongoose.Schema({
     date:{
         type:String
     },
+    month: {
+        type: String, // E.g., '2024-09'
+        required: true
+    },
     paymentMethod:{
         type:String,
         required:true

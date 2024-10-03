@@ -14,22 +14,22 @@ export class HttpService {
 
   // GET method
   get(endpoint: string, params?: any, headers?: HttpHeaders): Observable<any> {
-    return this._http.get(`${this.apiUrl}/${endpoint}`, { params, headers });
+    return this._http.get(`${this.apiUrl}/${endpoint}`, { params, headers,withCredentials: true  });
   }
 
   // POST method
   post(endpoint: string, data: any, headers?: HttpHeaders): Observable<any> {
-    return this._http.post(`${this.apiUrl}/${endpoint}`, data, { headers });
+    return this._http.post(`${this.apiUrl}/${endpoint}`, data, { headers,withCredentials: true  });
   }
 
   // PUT method (for updating data)
   put(endpoint: string, data: any, headers?: HttpHeaders): Observable<any> {
-    return this._http.put(`${this.apiUrl}/${endpoint}`, data, { headers });
+    return this._http.put(`${this.apiUrl}/${endpoint}`, data, { headers,withCredentials: true  });
   }
 
   // DELETE method
   delete(endpoint: string, headers?: HttpHeaders): Observable<any> {
-    return this._http.delete(`${this.apiUrl}/${endpoint}`, { headers });
+    return this._http.delete(`${this.apiUrl}/${endpoint}`, { headers,withCredentials: true  });
   }
   
 }

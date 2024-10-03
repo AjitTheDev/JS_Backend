@@ -21,6 +21,10 @@ const incomeSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    month: {
+        type: String, // E.g., '2024-09'
+        required: true
+    },
     recurring: {
         type: Boolean,
         default: false

@@ -6,19 +6,22 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const addIncome = asyncHandler(async(req,res)=>{
     const userId = req.userId;
-
+    console.log(req.body,'body ....')
     const {amount,
         source,
         description,
         date,recurring,
         createdAt,updatedAt } = req.body;
 
+
     const income = await Income.create({
         userId,
         amount,
         source,
         description,
-        date,recurring,
+        date,
+        month: new Date().toISOString().slice(0, 7), // Get the current date and format as "YYYY-MM",
+        recurring,
         createdAt,updatedAt
     })
 
@@ -62,6 +65,20 @@ const updateUserIncome = asyncHandler(async(req, res)=>{
     .json(new ApiResponse(200, updatedUserIncome, "Income updated successfully !!"))
 })
 
+const getMonthlyIncome = asyncHandler(async(req,res)=>{
+    const userId = req.userId;
+    const {month} = req.query;
+
+    const income = await Income.find({userId,month});
+
+    if(!income){
+        throw new ApiError(404, `No record found for ${month}`)
+    }
+
+    res.status(200)
+    .json(new ApiResponse(200, income, `${month} income retrieved successfully !! `))
+})
+
 const deleteUserIncome = asyncHandler(async(req, res)=>{
     const {id} = req.params 
     const deletedIncome = await Income.findOneAndDelete({_id:id});
@@ -75,4 +92,10 @@ const deleteUserIncome = asyncHandler(async(req, res)=>{
 })
 
 
-export {addIncome,getUserIncome,updateUserIncome,deleteUserIncome}
+export {
+    addIncome,
+    getUserIncome,
+    updateUserIncome,
+    getMonthlyIncome,
+    deleteUserIncome
+}

@@ -1,0 +1,85 @@
+<!-- <ul  style="color:rgb(94, 86, 121)">
+    <li style="color:rgb(67, 44, 109)"><a [routerLink]="'/dashboard'">Dashboard</a></li>
+    <li>View Transactions</li>
+    <li>Incomes</li>
+    <li>Expenses</li>
+    <li (click)="logOut()">Logout !!</li>
+</ul> -->
+
+
+<div class="flex items-center text-[#5D5165] space-x-4 p-4">
+    <!-- Profile image -->
+    <div class="rounded-full bg-white p-2">
+      <img src="assets/images/desksetup1.jpg" alt="Profile" class="rounded-full w-16 h-16">
+    </div>
+
+    <!-- User Info -->
+    <div>
+      <h1 class="text-2xl font-semibold text-[#4A4458]">{{userDetails?.userName}}</h1>
+      <p class="text-sm text-gray-500">Your Money</p>
+    </div>
+  </div>
+
+  <!-- Menu items -->
+  <ul class="mt-4 space-y-4">
+    <li>
+      <a 
+        [routerLink]="'/dashboard'"
+        class="flex items-center text-[#5D5165] hover:text-black border-l-4 pl-2"
+        [ngClass]="{
+          'border-[#D6B2DC]': selectedMenu === 'dashboard',
+          'border-transparent hover:border-[#D6B2DC]': selectedMenu !== 'dashboard'
+        }"
+        (click)="selectedMenu = 'dashboard'"
+      >
+        <span class="mr-2">📊</span> Dashboard
+      </a>
+    </li>
+    <li>
+      <a 
+        [routerLink]="'/transactions'"
+        class="flex items-center text-[#5D5165] hover:text-black border-l-4 pl-2"
+        [ngClass]="{
+          'border-[#D6B2DC]': selectedMenu === 'transactions',
+          'border-transparent hover:border-[#D6B2DC]': selectedMenu !== 'transactions'
+        }"
+        (click)="selectedMenu = 'transactions'"
+      >
+        <span class="mr-2">📜</span> View Transactions
+      </a>
+    </li>
+    <li>
+      <a 
+        [routerLink]="'/incomes'"
+        class="flex items-center text-[#5D5165] hover:text-black border-l-4 pl-2"
+        [ngClass]="{
+          'border-[#D6B2DC]': selectedMenu === 'incomes',
+          'border-transparent hover:border-[#D6B2DC]': selectedMenu !== 'incomes'
+        }"
+        (click)="selectedMenu = 'incomes'"
+      >
+        <span class="mr-2">💼</span> Incomes
+      </a>
+    </li>
+    <li>
+      <a 
+        [routerLink]="'/expenses'"
+        class="flex items-center text-[#5D5165] hover:text-black border-l-4 pl-2"
+        [ngClass]="{
+          'border-[#D6B2DC]': selectedMenu === 'expenses',
+          'border-transparent hover:border-[#D6B2DC]': selectedMenu !== 'expenses'
+        }"
+        (click)="selectedMenu = 'expenses'"
+      >
+        <span class="mr-2">💸</span> Expenses
+      </a>
+    </li>
+  </ul>
+  
+  
+
+
+
+  <div class="mt-auto">
+    <button (click)="logOut()" class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">Logout</button>
+  </div>

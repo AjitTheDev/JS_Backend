@@ -1,0 +1,94 @@
+<h1 class="text-2xl font-semibold text-[#4A4458] mb-4">Expenses</h1>
+
+<div class="flex justify-center mb-6">
+    <div
+        class="h-16 w-full shadow-md bg-[#F7EDED] border-4 border-[#FFFF] rounded-lg flex flex-col items-center justify-center p-3">
+        <h1 class="text-2xl font-semibold text-[#4A4458]">Total Expenses :<span
+                class="text-4xl font-bold text-[#fa0707a8]"> - $ {{totalUserExpense}}</span></h1>
+    </div>
+</div>
+
+<div class="grid grid-cols-12 gap-6">
+    <!-- Form Section (Left) -->
+
+    <div class="col-span-6 border-4 border-[#FFFF] rounded-lg">
+        <form [formGroup]="expenseForm">
+            <div class="bg-[#F7EDED] p-4 shadow-md border">
+                <h1 class="text-xl font-semibold text-[#4A4458] mb-4">Add Expense</h1>
+
+                <div *ngIf="isSuccess" class="p-4 mb-4 text-green-700 bg-green-100 rounded-md">
+                    {{successMsg}}
+                </div>
+
+                <!-- Amount -->
+                <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                <input type="number" id="amount" formControlName="amount"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4"
+                    placeholder="Enter amount">
+
+                <!-- Category -->
+                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                <input type="text" id="category" formControlName="category"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4"
+                    placeholder="Enter category">
+
+
+                <!-- Recurring -->
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="recurring" formControlName="recurring"
+                        class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="recurring" class="ml-2 block text-sm font-medium text-gray-700">Recurring</label>
+                </div>
+
+                <!-- Description -->
+                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea id="description" formControlName="description" rows="4"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Add a description..."></textarea>
+
+                <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                <input type="date" id="date" formControlName="date"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4">
+
+
+                <!-- Payment -->
+                <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method</label>
+                <select id="paymentMethod" formControlName="paymentMethod"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4">
+                    <option value="internetbanking">Internet Banking</option>
+                    <option value="cash">Cash</option>
+                    <option value="card">Card</option>
+                </select>
+
+                <div class="mt-6">
+                    <button (click)="onAddExpense()"
+                        class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
+                        Add Expense
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- expense List Section (Right) -->
+    <div class="col-span-6">
+        <div class="p-4 mb-4 bg-[#F7EDED] rounded-lg border-4 border-[#FFFF] shadow-md flex justify-between items-center gap-5"
+            *ngFor="let expense of userExpenseList">
+            <div class="flex items-center">
+                <span class="text-red-500 mr-3">●</span>
+                <div>
+                    <h2 class="font-semibold text-[#4A4458]">{{expense.category}}</h2>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-4">$ {{expense.amount}}</span>
+                        <span class="mr-4">📅 {{expense.date | date:"dd/MM/yyyy"}}</span>
+                        <span>💬 {{expense.description}}</span>
+                    </div>
+                </div>
+            </div>
+            <button class="bg-[#4A4458] text-white rounded-full p-2" (click)="deleteExpense(expense._id)">
+                🗑️
+            </button>
+        </div>
+        <!-- List of expense can go here -->
+    </div>
+</div>

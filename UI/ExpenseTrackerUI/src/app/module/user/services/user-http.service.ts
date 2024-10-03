@@ -12,4 +12,8 @@ export class UserHttpService {
   registerUser(data:any){
    return this._httpService.post('api/v1/user/registerUser',data)
   }
+  
+  loginUser(data:any){
+   return this._httpService.post('api/v1/user/loginUser',data)
+  }
 }

@@ -14,12 +14,16 @@ const addExpense = asyncHandler(async(req,res)=>{
             paymentMethod, recurring, createdAt, updatedAt
     }  =  req.body
 
+    const expenseDate = new Date(date);
+    const month = `${expenseDate.getFullYear()}-${String(expenseDate.getMonth() + 1).padStart(2, '0')}`; // E.g., '2024-09'
+
     const expense = await Expense.create({
         userId,
         amount,
         category,
         description,
         date,
+        month,
         paymentMethod,
         recurring,
         createdAt,
@@ -31,7 +35,6 @@ const addExpense = asyncHandler(async(req,res)=>{
 
 
 })
-
 
 const getAllExpenses = asyncHandler(async(req,res)=>{
     const allExpense = await Expense.find({})
@@ -67,6 +70,20 @@ const updateExpense = asyncHandler(async(req,res)=>{
     .json(new ApiResponse(200, expense, "Expense updated successfully !!!"))
 })
 
+const getMonthlyExpense= asyncHandler(async(req,res)=>{
+    const userId= req.userId;
+    const { month } = req.query;
+
+    const expense = await Expense.find({userId,month});
+
+    if(!expense){
+        throw new ApiError(404, `No record found for ${month}`)
+    }
+
+    res.status(200)
+    .json(new ApiResponse(200, expense, `${month} expense retrieved successfully !!`))
+})
+
 const deleteExpense = asyncHandler(async(req,res)=>{
 
     const {id }= req.params
@@ -90,5 +107,6 @@ export {
     getAllExpenses,
     getUserExpense,
     updateExpense,
-    deleteExpense
+    deleteExpense,
+    getMonthlyExpense
 }

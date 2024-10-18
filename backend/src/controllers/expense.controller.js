@@ -60,10 +60,10 @@ const getUserExpense = asyncHandler(async(req,res)=>{
 
 const updateExpense = asyncHandler(async(req,res)=>{
     const {id} = req.params;
-    const {amount,paymentMethod,description,category,recurring} =req.body;
+    const {amount,date,paymentMethod,description,category,recurring} =req.body;
     
     const expense = await Expense.findOneAndUpdate({_id:id},
-        {amount,paymentMethod,description,category,recurring},
+        {amount,date,paymentMethod,description,category,recurring},
         { new: true, runValidators: true }
     )
     res.status(200)

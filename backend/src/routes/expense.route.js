@@ -15,7 +15,7 @@ const router = Router()
 router.route("/addExpense").post(authorization,addExpense)
 router.route("/getAllExpense").get(authorization,getAllExpenses)
 router.route("/getUserExpense").get(authorization,getUserExpense)
-router.route("/updateExpenseById/:id").patch(authorization,updateExpense)
+router.route("/updateExpenseById/:id").put(authorization,updateExpense)
 router.route("/deleteExpenseById/:id").delete(authorization,deleteExpense)
 router.route("/getMonthlyExpense").get(authorization,getMonthlyExpense) //eg : 2024-09
 

@@ -14,12 +14,14 @@ export class IncomeComponent implements OnInit{
   totalUserIncome:number=0;
   isSuccess: boolean = false; 
   successMsg:any;
+  isUpdateIncome:boolean=false;
 
   incomeForm = new FormGroup({
     amount: new FormControl(''),
     source: new FormControl(),
     recurring: new FormControl(),
-    description: new FormControl()
+    description: new FormControl(),
+    _id: new FormControl(),
   })
 
   constructor(
@@ -33,9 +35,17 @@ export class IncomeComponent implements OnInit{
     this.getTotalIncome();
   }
 
+  toggleOptions(income: any) {
+    income.showOptions = !income.showOptions;
+  }
+
+
   getTotalIncome() {
      this._dashboardHttpService.getUserIncome().subscribe(income => {
       if (income) {
+        income.data.forEach((ic:any)=>{
+            ic.showOptions=false
+        })
         this.userIncomeList = income.data;
         this.totalUserIncome = this.userIncomeList.reduce((total,e)=>total + e.amount,0)
       }
@@ -46,9 +56,29 @@ export class IncomeComponent implements OnInit{
     this._incomeHttpService.addIncome(this.incomeForm.value).subscribe(data=>{
       if(data){
        
-        this.showSuccessMsg(false,'')
-        this.incomeForm.reset();
+        this.showSuccessMsg('added','')
+        this.resetAll();
          
+        setTimeout(() => {
+         this.isSuccess = false;
+       }, 3000);
+
+        this.getTotalIncome();
+      }
+    })
+  }
+
+  editIncome(income:any){
+    this.incomeForm.patchValue(income);
+    this.isUpdateIncome=true;
+  }
+
+  onUpdateIncome(){
+    console.log(this.incomeForm.value)
+    this._incomeHttpService.updateIncome(this.incomeForm.value._id,this.incomeForm.value).subscribe(updatedIncome=>{
+      if(updatedIncome){
+        this.resetAll();
+        this.showSuccessMsg('updated',this.incomeForm.value._id)
         setTimeout(() => {
          this.isSuccess = false;
        }, 3000);
@@ -61,7 +91,7 @@ export class IncomeComponent implements OnInit{
   deleteIncome(_id:any){
     this._incomeHttpService.deleteIncome(_id).subscribe(data=>{
       if(data){
-           this.showSuccessMsg(true,_id)
+           this.showSuccessMsg('deleted',_id)
         setTimeout(() => {
          this.isSuccess = false;
        }, 3000);
@@ -72,13 +102,38 @@ export class IncomeComponent implements OnInit{
     })
   }
 
-  showSuccessMsg(isDeleteMsg:any,id:any){
+  showSuccessMsg(action:any,id:any){
+    this.showSnackbarMessage('hello snackbar', true)
     this.isSuccess = true;
-    if(isDeleteMsg){
+    if(action=='deleted'){
       this.successMsg=`Income ${id} deleted successfully !`
-    }else{
+    }else if(action=='added'){
       this.successMsg=`Income added successfully !`
+    }else{
+      this.successMsg=`Income updated successfully !`
     }
+  }
+
+  onCancel(){
+    this.resetAll();
+  }
+
+  resetAll(){
+    this.incomeForm.reset();
+    this.isUpdateIncome=false;
+  }
+
+  showSnackbar = false;
+  snackbarMessage = '';
+  showSnackbarMessage(message: string, success: boolean) {
+    this.snackbarMessage = message;
+    this.isSuccess = success;
+    this.showSnackbar = true;
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+      this.showSnackbar = false;
+    }, 3000);
   }
 
 

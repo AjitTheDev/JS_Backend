@@ -13,6 +13,10 @@ export class IncomeHttpService {
    return this._httpService.post('api/v1/income/addIncome',data)
   }
 
+  updateIncome(_id:any,data:any){
+   return this._httpService.put(`api/v1/income/updateUserIncome/${_id}`,data)
+  }
+
   deleteIncome(id:any){
     return this._httpService.delete(`api/v1/income/deleteUserIncome/${id}`,)
   }

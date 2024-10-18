@@ -21,5 +21,8 @@ export class DashboardHttpService {
   getUserIncome(){
    return this._httpService.get('api/v1/income/getUserIncome')
   }
+  getRecentHistory(){
+   return this._httpService.get('api/v1/history/getRecentHistory')
+  }
   
 }

@@ -1,4 +1,4 @@
-<div *ngIf="isAuthorized ==='true'">
+<div *ngIf="isAuthorized ===true">
 
 
   <div class="grid grid-cols-5  gap-5">
@@ -17,6 +17,6 @@
   </div>
 
 
-  <div *ngIf="isAuthorized !=='true'">
+  <div *ngIf="isAuthorized !==true">
     <router-outlet></router-outlet>
   </div>

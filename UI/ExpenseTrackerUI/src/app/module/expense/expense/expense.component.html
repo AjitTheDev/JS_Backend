@@ -14,7 +14,7 @@
     <div class="col-span-6 border-4 border-[#FFFF] rounded-lg">
         <form [formGroup]="expenseForm">
             <div class="bg-[#F7EDED] p-4 shadow-md border">
-                <h1 class="text-xl font-semibold text-[#4A4458] mb-4">Add Expense</h1>
+                <h1 class="text-xl font-semibold text-[#4A4458] mb-4">{{ isUpdateMode ? 'Update Expense' : 'Add Expense' }}</h1>
 
                 <div *ngIf="isSuccess" class="p-4 mb-4 text-green-700 bg-green-100 rounded-md">
                     {{successMsg}}
@@ -60,12 +60,29 @@
                     <option value="card">Card</option>
                 </select>
 
-                <div class="mt-6">
-                    <button (click)="onAddExpense()"
-                        class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
-                        Add Expense
-                    </button>
+                <div class="mt-6 flex justify-between items-center">
+                    <div>
+                        <button (click)="onAddExpense()" *ngIf="!isUpdateMode"
+                            class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
+                            Add Expense
+                        </button>
+                        <button (click)="onUpdateExpense()" *ngIf="isUpdateMode"
+                            class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
+                            Update Income
+                        </button>
+                    </div>
+                
+                    <div>
+                        <button (click)="onCancel()"
+                            class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 transition duration-200">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
+
+
+
+
             </div>
         </form>
     </div>
@@ -85,9 +102,31 @@
                     </div>
                 </div>
             </div>
-            <button class="bg-[#4A4458] text-white rounded-full p-2" (click)="deleteExpense(expense._id)">
-                🗑️
-            </button>
+           
+
+<!-- More Options Button (Three Dots) -->
+<div class="relative">
+    <!-- Three Dots Button -->
+    <button class="text-black rounded-full p-2" (click)="toggleOptions(expense)" style="font-weight: bolder;">
+        ⋮
+    </button>
+
+    <!-- Dropdown for Edit and Delete Actions -->
+    <div *ngIf="expense.showOptions" class="absolute right-0 bg-white shadow-lg rounded-lg z-10 w-32 mt-2">
+        <ul class="text-left">
+            <li (click)="editExpense(expense)" class="px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">
+                ✏️ Edit
+            </li>
+            <li (click)="deleteExpense(expense._id)" class="px-4 py-2 text-red-600 hover:bg-red-200 cursor-pointer">
+                🗑️ Delete
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
         </div>
         <!-- List of expense can go here -->
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './core/services/auth-service/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -9,19 +10,19 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent implements OnInit{
   title = 'ExpenseTrackerUI';
-  isAuthorized:string | null='';
+  isAuthorized:boolean=false;
 
   
 
   constructor(
     private _router:Router,
+    private _authService: AuthService
   ){}
 
   ngOnInit(): void {
-  this.isAuthorized = localStorage.getItem('isAuthorized')
-    if(this.isAuthorized!=='true'){
-      this._router.navigate(['/login']);
-    }
+    this._authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      this.isAuthorized = isAuthenticated;
+    });
   }
 
 }

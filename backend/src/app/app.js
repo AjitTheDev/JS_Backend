@@ -21,12 +21,14 @@ import userRoute from '../routes/user.route.js';
 import expenseRoute from '../routes/expense.route.js'
 import budgetRoute from '../routes/budget.route.js'
 import incomeRoute from '../routes/income.route.js'
+import historyRoute from '../routes/history.route.js'
 
 // Routes Declaration 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/expense",expenseRoute);
 app.use("/api/v1/budget",budgetRoute);
 app.use("/api/v1/income",incomeRoute);
+app.use("/api/v1/history",historyRoute);
 
 
 export {app}

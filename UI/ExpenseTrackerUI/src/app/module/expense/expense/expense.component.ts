@@ -13,6 +13,7 @@ export class ExpenseComponent {
   totalUserExpense:number=0;
   isSuccess: boolean = false; 
   successMsg:any;
+  isUpdateMode:boolean=false;
 
   expenseForm = new FormGroup({
     amount: new FormControl(''),
@@ -21,6 +22,7 @@ export class ExpenseComponent {
     description: new FormControl(),
     date: new FormControl(),
     paymentMethod: new FormControl(),
+    _id: new FormControl(),
   })
 
   constructor(
@@ -32,6 +34,10 @@ export class ExpenseComponent {
 
   ngOnInit(): void {
     this.getTotalExpense();
+  }
+
+  toggleOptions(expense: any) {
+    expense.showOptions = !expense.showOptions;
   }
 
   getTotalExpense() {
@@ -47,8 +53,8 @@ export class ExpenseComponent {
     this._expenseHttpService.addExpense(this.expenseForm.value).subscribe(data=>{
       if(data){
        
-        this.showSuccessMsg(false,'')
-        this.expenseForm.reset();
+        this.showSuccessMsg('added','')
+        this.resetAll();
          
         setTimeout(() => {
          this.isSuccess = false;
@@ -59,10 +65,31 @@ export class ExpenseComponent {
     })
   }
 
+  editExpense(expense:any){
+    this.expenseForm.patchValue(expense);
+    this.isUpdateMode=true
+  }
+
+  onUpdateExpense(){
+    this._expenseHttpService.updateExpense(this.expenseForm.value._id, this.expenseForm.value).subscribe(expense=>{
+      if(expense){
+        this.showSuccessMsg('added','')
+        this.resetAll();
+         
+        setTimeout(() => {
+         this.isSuccess = false;
+       }, 3000);
+  
+        this.getTotalExpense();
+      }
+      
+    })
+  }
+
   deleteExpense(_id:any){
     this._expenseHttpService.deleteExpense(_id).subscribe(data=>{
       if(data){
-           this.showSuccessMsg(true,_id)
+           this.showSuccessMsg('deleted',_id)
         setTimeout(() => {
          this.isSuccess = false;
        }, 3000);
@@ -73,12 +100,23 @@ export class ExpenseComponent {
     })
   }
 
-  showSuccessMsg(isDeleteMsg:any,id:any){
+  showSuccessMsg(action:any,id:any){
     this.isSuccess = true;
-    if(isDeleteMsg){
+    if(action=="deleted"){
       this.successMsg=`Expense ${id} deleted successfully !`
-    }else{
+    }else if(action =='added'){
       this.successMsg=`Expense added successfully !`
+    }else{
+      this.successMsg=`Expense ${id} updated successfully !`
     }
+  }
+
+  onCancel(){
+    this.resetAll();
+  }
+
+  resetAll(){
+    this.expenseForm.reset();
+    this.isUpdateMode=false;
   }
 }

@@ -1,1 +1,21 @@
-<p>recent-history works!</p>
+<div class="bg-[#F7EDED] p-4 rounded-lg">
+  <h1 class="text-2xl font-semibold text-[#4A4458] mb-4">Recent History</h1>
+
+  <div *ngFor="let t of recentTransactions" 
+      class="p-4 mb-4 shadow-md bg-[#F7EDED] border-4 border-[#FFFF] rounded-lg shadow-md flex justify-between items-center w-full max-w-2xl">
+    
+    <!-- Source/Category and Amount in One Row -->
+    <div class="flex justify-between w-full">
+      <h2 class="font-semibold text-[#4A4458]">{{ t.source ? t.source : t.category }}</h2>
+
+      <!-- Spacer for Gap Between Source/Category and Amount -->
+      <div class="flex-grow"></div>
+      
+      <!-- Amount -->
+      <span [ngClass]="{'text-green-600': t.source, 'text-red-600': t.category}" 
+          class="font-bold text-lg">
+        {{ t.source  ? '+' : '-' }}${{ t.amount }}
+      </span>
+    </div>
+  </div>
+</div>

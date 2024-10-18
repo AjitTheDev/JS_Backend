@@ -14,7 +14,7 @@
     <div class="col-span-6 border-4 border-[#FFFF] rounded-lg">
         <form [formGroup]="incomeForm">
             <div class="bg-[#F7EDED] p-4 shadow-md border">
-                <h1 class="text-xl font-semibold text-[#4A4458] mb-4">Add Income</h1>
+                <h1 class="text-xl font-semibold text-[#4A4458] mb-4">{{ isUpdateIncome ? 'Update Income' : 'Add Income' }}</h1>
 
                 <div *ngIf="isSuccess" class="p-4 mb-4 text-green-700 bg-green-100 rounded-md">
                     {{successMsg}}
@@ -48,12 +48,26 @@
                     class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Add a description..."></textarea>
 
-                <div class="mt-6">
-                    <button (click)="onAddIncome()"
-                        class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
-                        Add Income
-                    </button>
-                </div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <div>
+                            <button (click)="onAddIncome()" *ngIf="!isUpdateIncome"
+                                class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
+                                Add Income
+                            </button>
+                            <button (click)="onUpdateIncome()" *ngIf="isUpdateIncome"
+                                class="bg-[#4A4458] text-white font-bold py-2 px-4 rounded-md hover:bg-[#362e43] transition duration-200">
+                                Update Income
+                            </button>
+                        </div>
+                    
+                        <div>
+                            <button (click)="onCancel()"
+                                class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 transition duration-200">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    
             </div>
         </form>
     </div>
@@ -65,18 +79,43 @@
             <div class="flex items-center">
                 <span class="text-green-500 mr-3">●</span>
                 <div>
-                    <h2 class="font-semibold text-[#4A4458]">{{income.source}}</h2>
+                    <h2 class="font-semibold text-[#4A4458]">{{ income.source }}</h2>
                     <div class="flex items-center text-sm text-gray-500">
-                        <span class="mr-4">$ {{income.amount}}</span>
-                        <span class="mr-4">📅 {{income.date | date:'dd/mm/yyyy'}}</span>
-                        <span>💬 {{income.description}}</span>
+                        <span class="mr-4">$ {{ income.amount }}</span>
+                        <span class="mr-4">📅 {{ income.date | date:'dd/MM/yyyy' }}</span>
+                        <span>💬 {{ income.description }}</span>
                     </div>
                 </div>
             </div>
-            <button class="bg-[#4A4458] text-white rounded-full p-2" (click)="deleteIncome(income._id)">
-                🗑️
-            </button>
+    
+            <!-- More Options Button (Three Dots) -->
+            <div class="relative">
+                <!-- Three Dots Button -->
+                <button class="text-black rounded-full p-2" (click)="toggleOptions(income)" style="font-weight: bolder;">
+                    ⋮
+                </button>
+    
+                <!-- Dropdown for Edit and Delete Actions -->
+                <div *ngIf="income.showOptions" class="absolute right-0 bg-white shadow-lg rounded-lg z-10 w-32 mt-2">
+                    <ul class="text-left">
+                        <li (click)="editIncome(income)" class="px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">
+                            ✏️ Edit
+                        </li>
+                        <li (click)="deleteIncome(income._id)" class="px-4 py-2 text-red-600 hover:bg-red-200 cursor-pointer">
+                            🗑️ Delete
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <!-- List of incomes can go here -->
     </div>
+    
+</div>
+
+
+<!-- Snackbar Notification -->
+<div *ngIf="showSnackbar" [ngClass]="{ 'bg-green-500': isSuccess, 'bg-red-500': !isSuccess }" 
+     class="fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white transition-opacity duration-300" 
+     [class.opacity-0]="!showSnackbar">
+  {{ snackbarMessage }}
 </div>

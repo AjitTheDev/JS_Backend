@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-recent-history',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './recent-history.component.scss'
 })
 export class RecentHistoryComponent {
-
+  @Input() recentTransactions:any;
 }

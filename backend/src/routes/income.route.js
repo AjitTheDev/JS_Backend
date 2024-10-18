@@ -11,7 +11,7 @@ const router = Router();
 
 router.route('/addIncome').post(authorization,addIncome);
 router.route('/getUserIncome').get(authorization,getUserIncome);
-router.route('/updateUserIncome/:id').patch(authorization,updateUserIncome);
+router.route('/updateUserIncome/:id').put(authorization,updateUserIncome);
 router.route('/deleteUserIncome/:id').delete(authorization,deleteUserIncome);
 router.route('/getMonthlyIncome').get(authorization,getMonthlyIncome);
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardHttpService } from '../../../module/dashboard/services/dashboard-http.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service/auth-service';
 
 @Component({
   selector: 'app-app-menu',
@@ -11,6 +12,7 @@ export class AppMenuComponent implements OnInit{
   selectedMenu: string = 'dashboard'; // Default selected menu
   userDetails:any;
   constructor(private _dashboardHttpService:DashboardHttpService,
+    private _authService:AuthService,
     private _router:Router
   ){
   }
@@ -29,9 +31,7 @@ export class AppMenuComponent implements OnInit{
   logOut(){
     this._dashboardHttpService.logOut().subscribe(data => {
       if (data) {
-        localStorage.removeItem('isAuthorized'); // Clear only the isAuthorized item
-     // this.isAuthorized = 'false'; // Update the local component state
-      this._router.navigate(['/login']); // Redirect to login
+        this._authService.logout();
       }
     })
   }

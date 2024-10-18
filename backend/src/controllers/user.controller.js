@@ -109,60 +109,35 @@ const authorization = asyncHandler(async(req,res,next)=>{
 })
 
 const finalizeMonth = asyncHandler(async (req, res) => {
-    const userId = req.userId; // Extract the user ID from the request
+    const userId = req.userId; // Ensure that userId is a valid ObjectId
     const { month } = req.body; // Get the month from the request body
 
-    console.log('user controller', userId); // Log the user ID for debugging
-    const userIdObjectId = new mongoose.Types.ObjectId(userId)
+    console.log('User ID:', userId); // Debugging
 
-    // Calculate total income for the month
-    const totalIncome = await Income.aggregate([
-        { 
-            $match: { 
-                userId: userIdObjectId, 
-                month 
-            } 
-        },
-        { 
-            $group: { 
-                _id: null, 
-                total: { $sum: '$amount' } 
-            } 
-        }
-    ]);
+    // Find total income for the user in the given month
+    const incomeRecords = await Income.find({ userId, month });
+    const totalIncome = incomeRecords.reduce((sum, record) => sum + record.amount, 0);
 
-    // Calculate total expenses for the month
-    const totalExpenses = await Expense.aggregate([
-        { 
-            $match: { 
-                userId: userIdObjectId, 
-                month 
-            } 
-        },
-        { 
-            $group: { 
-                _id: null, 
-                total: { $sum: '$amount' } 
-            } 
-        }
-    ]);
+    // Find total expenses for the user in the given month
+    const expenseRecords = await Expense.find({ userId, month });
+    const totalExpenses = expenseRecords.reduce((sum, record) => sum + record.amount, 0);
 
     // Calculate the monthly balance
-    const incomeTotal = totalIncome[0]?.total || 0; // Default to 0 if no income found
-    const expensesTotal = totalExpenses[0]?.total || 0; // Default to 0 if no expenses found
-    const monthlyBalance = incomeTotal - expensesTotal;
+    const monthlyBalance = totalIncome - totalExpenses;
 
     // Update the user's total wealth
     const user = await User.findById(userId);
     if (!user) {
-        throw new ApiError(404, "User not found"); // Error handling if user not found
+        throw new ApiError(404, "User not found");
     }
-    user.totalWealth += monthlyBalance; // Update total wealth
-    await user.save(); // Save the updated user
 
-    // Respond with the result
+    user.totalWealth += monthlyBalance;
+    await user.save();
+
+    // Return the response
     res.status(200).json(new ApiResponse(200, `Month finalized. Monthly balance: ${monthlyBalance}, Total wealth: ${user.totalWealth}`));
 });
+
 
 
 
